@@ -7,9 +7,9 @@ To run the tests.
 docker run -v $PWD:/example openpolicyagent/opa test example/[path] -v
 ```
 
-# Notes on incremental rules
+# Testing rules that define set documents
 
-Given the following rule.
+The following rule evaluates to a set document not a boolean document. If it were defined `deny { ... }` it would evaluate to a boolean document.
 
 ```
 deny[msg] {
