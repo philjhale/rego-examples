@@ -20,7 +20,7 @@ deny[msg] {
 }
 ```
 
-And an associated test.
+Add a test for project name length.
 ```
 test_project_name_too_long_denied {
     deny["Project name too long"] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project whose name is too long" } } }] }
