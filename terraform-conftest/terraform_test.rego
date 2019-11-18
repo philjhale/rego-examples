@@ -5,7 +5,11 @@ test_project_name_allowed {
 }
 
 test_project_name_too_long_denied {
-    deny[input.resource_changes[_].change.after.name] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project whose name is too long" } } },{ "type": "google_project", "change": { "after": { "name": "Test project whose name is too long 2" } } }] }
+    deny[sprintf("Project %s name is too long", [input.resource_changes[_].change.after.name])] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project whose name is too long" } } },{ "type": "google_project", "change": { "after": { "name": "Test project whose name is too long 2" } } }] }
+}
+
+test_project_name_too_long_denied_no_dupe {
+    deny[sprintf("Project %s name is too long", [input.resource_changes[_].change.after.name])] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project whose name is too long" } } },{ "type": "google_project", "change": { "after": { "name": "Test project whose name is too long 2" } } }] }
 }
 
 test_project_label_contains_hypen_denied {

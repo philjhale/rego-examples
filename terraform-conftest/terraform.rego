@@ -5,7 +5,7 @@ deny[msg] {
     changes := input.resource_changes[_] 
     changes.type == "google_project" 
     count(changes.change.after.name) > 30
-    msg = sprintf("Project %s name is too long", input.resource_changes[_].change.after.name)
+    msg = sprintf("Project %s name is too long", [input.resource_changes[_].change.after.name])
 }
 
 invalid_label_msg := "Project labels must be between 1 and 20 characters long and must only include lower case letters and numbers"
