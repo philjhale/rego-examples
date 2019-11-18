@@ -1,0 +1,5 @@
+{
+    "error_messages" : {
+        "project_name_too_long_msg": "Project %s name is too long"
+    }
+}
