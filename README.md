@@ -7,6 +7,10 @@ To run the tests.
 docker run -v $PWD:/example openpolicyagent/opa test example/[path] -v
 ```
 
+# Tips
+
+* To view debug messages when running tests, use `trace(sprintf("Some message"))` and execute `opa test` using the `--explain notes` flag
+
 # Testing rules that define set documents
 
 The following rule evaluates to a set document not a boolean document. If it were defined `deny { ... }` it would evaluate to a boolean document.
