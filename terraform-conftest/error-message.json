@@ -1,5 +1,6 @@
 {
     "error_messages" : {
-        "project_name_too_long_msg": "Project %s name is too long"
+        "project_name_too_long_msg": "Project '%s' name is too long",
+        "project_label_invalid_msg": "Label with the value '%s' is invalid"
     }
 }

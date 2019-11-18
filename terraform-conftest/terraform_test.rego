@@ -9,11 +9,11 @@ test_project_name_too_long_denied {
 }
 
 test_project_label_contains_hypen_denied {
-    deny[invalid_label_msg] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "dev!" } } } }] }
+    deny[sprintf(data.error_messages.project_label_invalid_msg, ["dev!"])] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "dev!" } } } }] }
 }
 
 test_project_label_too_long_denied {
-    deny[invalid_label_msg] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "01234567890" } } } }] }
+    deny[sprintf(data.error_messages.project_label_invalid_msg, ["01234567890"])] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "01234567890" } } } }] }
 }
 
 # Sample Terraform plan
