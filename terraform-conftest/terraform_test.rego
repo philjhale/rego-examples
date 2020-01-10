@@ -1,4 +1,4 @@
-package terraform
+package main
 
 test_project_name_allowed {
     not deny[""] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project" } } }] }

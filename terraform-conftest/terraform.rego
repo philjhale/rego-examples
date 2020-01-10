@@ -1,9 +1,12 @@
 # Example showing how to verify GCP changes proposed in a Terraform plan file using the Conftest Rego policy structure.
-# See https://github.com/instrumenta/conftest
-# The aim is to output an error message that tells the developer which policy has been violated by which GCP resource.
-# And, to remove the error message duplication between the policies and the tests. 
-# Note, this technique currently works in OPA but does NOT work in Conftest. See https://github.com/instrumenta/conftest/issues/169
-package terraform
+
+# To verify the tests using Conftest execute
+# docker run --rm -v $(pwd):/project instrumenta/conftest verify --policy /project --data /project/error-message.json
+
+# To test input.json using Conftest execute
+# docker run --rm -v $(pwd):/project instrumenta/conftest test /project/input.json --policy /project --data /project/error-message.json
+
+package main
 
 deny[msg] {
     changes := input.resource_changes[_] 

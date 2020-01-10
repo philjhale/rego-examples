@@ -1,0 +1,25 @@
+{
+    "resource_changes": [
+        {
+            "address": "module.test.google_project.main",
+            "module_address": "module.test",
+            "mode": "managed",
+            "type": "google_project",
+            "name": "main",
+            "provider_name": "google",
+            "change": {
+                "before": null,
+                "after": {
+                    "auto_create_network": true,
+                    "billing_account": "1234-5678",
+                    "labels": {
+                        "env": "dev",
+                        "team": "my team"
+                    },
+                    "name": "Test project name that is waaayyyy tooo long",
+                    "org_id": "1234"
+                }
+            }
+        }
+    ]
+}
