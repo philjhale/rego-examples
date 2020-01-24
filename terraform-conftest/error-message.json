@@ -2,6 +2,7 @@
     "error_messages" : {
         "project_name_too_long_msg": "Project '%s' name is too long",
         "project_label_invalid_msg": "Label with the value '%s' is invalid",
-        "project_required_label_missing_msg": "Required label '%s' is missing"
+        "project_required_label_env_missing_msg": "Required label '%s' is missing",
+        "project_required_label_missing_msg": "One of the required labels are missing. Required labels: %s"
     }
 }

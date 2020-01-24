@@ -27,5 +27,14 @@ deny[msg] {
     changes := input.resource_changes[_] 
     changes.type == "google_project" 
     not changes.change.after.labels
-    msg = sprintf(data.error_messages.project_required_label_missing_msg, ["env"])
+    msg = sprintf(data.error_messages.project_required_label_env_missing_msg, ["env"])
+}
+
+required_labels = ["env", "team"]
+deny[msg] {
+    changes := input.resource_changes[_] 
+    changes.type == "google_project" 
+    required_label = required_labels[_]
+    not changes.change.after.labels[required_label]
+    msg = sprintf(data.error_messages.project_required_label_missing_msg, [concat(",", required_labels)])
 }
