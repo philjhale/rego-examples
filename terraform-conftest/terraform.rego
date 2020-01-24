@@ -22,3 +22,10 @@ deny[msg] {
     not re_match("^[a-z0-9]{1,10}$", labels) 
     msg = sprintf(data.error_messages.project_label_invalid_msg, [labels])
 }
+
+deny[msg] {
+    changes := input.resource_changes[_] 
+    changes.type == "google_project" 
+    not changes.change.after.labels
+    msg = sprintf(data.error_messages.project_required_label_missing_msg, ["env"])
+}

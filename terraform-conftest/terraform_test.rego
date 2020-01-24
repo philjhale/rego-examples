@@ -1,7 +1,7 @@
 package main
 
-test_project_name_allowed {
-    not deny[""] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project" } } }] }
+test_project_allowed {
+    not deny[""] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "dev" } } } }] }
 }
 
 test_project_name_too_long_denied {
@@ -15,6 +15,11 @@ test_project_label_contains_hypen_denied {
 test_project_label_too_long_denied {
     deny[sprintf(data.error_messages.project_label_invalid_msg, ["01234567890"])] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "01234567890" } } } }] }
 }
+
+test_missing_label_denied {
+    deny[sprintf(data.error_messages.project_required_label_missing_msg, ["env"])] with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project" } } }] }
+}
+
 
 # Sample Terraform plan
 #"resource_changes": [
