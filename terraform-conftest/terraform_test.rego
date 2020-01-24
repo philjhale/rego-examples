@@ -1,8 +1,18 @@
 package main
 
+# empty and no_violations idea borrowed from https://github.com/instrumenta/conftest/blob/master/examples/kubernetes/policy/base_test.rego
+
+empty(value) {
+  count(value) == 0
+}
+
+no_violations {
+  empty(deny)
+}
+
 test_project_allowed {
-    not deny[""] 
-    with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "dev" } } } }] }
+    no_violations 
+    with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "dev", "team": "stuff" } } } }] }
 }
 
 test_project_name_too_long_denied {
