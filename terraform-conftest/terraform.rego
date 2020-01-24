@@ -36,5 +36,5 @@ deny[msg] {
     changes.type == "google_project" 
     required_label = required_labels[_]
     not changes.change.after.labels[required_label]
-    msg = sprintf(data.error_messages.project_required_label_missing_msg, [concat(",", required_labels)])
+    msg = sprintf(data.error_messages.project_required_label_missing_msg, [changes.change.after.name, concat(",", required_labels)])
 }

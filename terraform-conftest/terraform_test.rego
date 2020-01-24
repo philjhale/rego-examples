@@ -36,7 +36,12 @@ test_missing_env_label_denied {
 }
 
 test_missing_team_label_denied {
-    deny[sprintf(data.error_messages.project_required_label_missing_msg, ["env,team"])] 
+    deny[sprintf(data.error_messages.project_required_label_missing_msg, ["Test project", "env,team"])] 
+    with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "dev" } } } }] }
+}
+
+test_invalid_team_label_denied {
+    deny[sprintf(data.error_messages.project_required_label_missing_msg, ["Test project", "env,team"])] 
     with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "dev" } } } }] }
 }
 
