@@ -15,9 +15,16 @@ test_project_allowed {
     with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "env": "dev", "team": "stuff" } } } }] }
 }
 
+# Project name
 test_project_name_too_long_denied {
     deny[sprintf(data.error_messages.project_name_too_long_msg, [input.resource_changes[_].change.after.name])] 
     with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project whose name is too long" } } },{ "type": "google_project", "change": { "after": { "name": "Test project whose name is too long 2" } } }] }
+}
+
+# Project labels
+test_project_labels_unknown_allowed {
+    no_violations 
+    with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project" }, "after_unknown": { "labels": {} } } }] }
 }
 
 test_project_label_contains_hypen_denied {
@@ -31,8 +38,8 @@ test_project_label_too_long_denied {
 }
 
 test_missing_env_label_denied {
-    deny[sprintf(data.error_messages.project_required_label_env_missing_msg, ["env"])] 
-    with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project" } } }] }
+    deny[sprintf(data.error_messages.project_required_label_missing_msg, ["Test project", "env,team"])] 
+    with input as { "resource_changes": [{ "type": "google_project", "change": { "after": { "name": "Test project", "labels": { "team": "whatevs" } } } }] }
 }
 
 test_missing_team_label_denied {

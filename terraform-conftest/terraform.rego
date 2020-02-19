@@ -8,6 +8,7 @@
 
 package main
 
+# Project name length
 deny[msg] {
     changes := input.resource_changes[_] 
     changes.type == "google_project" 
@@ -15,6 +16,7 @@ deny[msg] {
     msg = sprintf(data.error_messages.project_name_too_long_msg, [changes.change.after.name])
 }
 
+# Project label format
 deny[msg] {
     changes := input.resource_changes[_] 
     changes.type == "google_project" 
@@ -23,17 +25,12 @@ deny[msg] {
     msg = sprintf(data.error_messages.project_label_invalid_msg, [labels])
 }
 
-deny[msg] {
-    changes := input.resource_changes[_] 
-    changes.type == "google_project" 
-    not changes.change.after.labels
-    msg = sprintf(data.error_messages.project_required_label_env_missing_msg, ["env"])
-}
-
+# Project mandatory labels
 required_labels = ["env", "team"]
 deny[msg] {
     changes := input.resource_changes[_] 
     changes.type == "google_project" 
+    changes.change.after.labels
     required_label = required_labels[_]
     not changes.change.after.labels[required_label]
     msg = sprintf(data.error_messages.project_required_label_missing_msg, [changes.change.after.name, concat(",", required_labels)])
